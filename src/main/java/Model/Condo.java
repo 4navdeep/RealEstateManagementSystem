@@ -24,22 +24,31 @@ public class Condo {
         this.potentialTenant = new ArrayList<>();
     }
     public String getInfo() {
-        return "Condo {" +
+        return "\nCondo {" +
                 "  unitNumber='" + condoNum + '\''  +
-                ", numBedrooms=" + numBedrooms      +
-                ", numBathrooms=" + numBathrooms    +
-                ", squareFootage=" + squareFootage  +
-                ", rent=" + rent +
+                "\nnumBedrooms=" + numBedrooms      +
+                "\nnumBathrooms=" + numBathrooms    +
+                "\nsquareFootage=" + squareFootage  +
+                "\nrent=" + rent +
                 '}';
     }
-    public void notifyTenant()
+    public String notifyTenant()
     {
         isAvailable=true;
+        String message="";
+        boolean flag=false;
         for(Tenant t:potentialTenant)
         {
-            System.out.println("Tenant: "+t.getName() + ": The Condo you were interested in is Available now");
-            System.out.println(this.getInfo());
+            message += "Tenant: "+t.getName() + ": The Apartment you were interested in is Available now" + " " + this.getInfo()+"\n\n";
+            System.out.println(message);
+            flag=true;
+
         }
+        for (int i=0;i<potentialTenant.size();i++)
+        {
+            potentialTenant.remove(0);
+        }
+        return message;
     }
     // Getters and Setters
     public int getRent()

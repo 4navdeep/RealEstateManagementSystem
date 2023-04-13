@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ApartmentBuilding extends Property{
     String buildingName;
-    public static int numApartments =0;
+    public static int numApartments=0;
     private ArrayList<Apartment> apartments;
 
     public ApartmentBuilding( String buildingName,String streetName, String city, String postalCode){
@@ -21,10 +21,10 @@ public class ApartmentBuilding extends Property{
     }
     // Getters and Setters
     public String getInfo() {
-        return "Apartment building (" + numApartments + " apartments) : "
-                + buildingName + " "
-                + getStreetName()   + " "
-                + getCity()         + " "
+        return "\nApartment building (" + numApartments + " apartments) :\nBuilding name: "
+                + buildingName + "\nStreet Name: "
+                + getStreetName()   + "\n City name: "
+                + getCity()         + "\nPostal Code: "
                 + getPostalCode();
     }
     public void addApartment(int numBedrooms, int numBathrooms, int squareFootage,int rent)

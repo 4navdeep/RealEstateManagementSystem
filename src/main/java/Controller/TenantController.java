@@ -4,13 +4,12 @@ import Model.*;
 
 public class TenantController {
 
-    public void addTenant(String info, int unit, Tenant tenant)
-    {
-        Property p = MockDatabaseController.getProperty(info);
+    public void addTenant(String info, int unit, Tenant tenant) throws Exception {
+        Property p = DatabaseController.getProperty(info);
         if(p==null)
         {
             System.out.println("The building name you entered does not exist. Enter the building to the properties first");
-            return;
+            throw new Exception("The building name you entered does not exist. Enter the building to the properties first");
         }
         if(p instanceof CondoBuilding building)
         {
@@ -26,7 +25,7 @@ public class TenantController {
             if(condo==null)
             {
                 System.out.println("There is no condo unit :" + unit + " available!! Enter valid condo unit\n");
-                return;
+                throw new Exception("There is no condo unit :" + unit + " available!! Enter valid condo unit\n");
             }
             condo.addPotentialTenants(tenant);
         }
@@ -41,6 +40,6 @@ public class TenantController {
             assert house != null;
             house.addPotentialTenants(tenant);
         }
-        MockDatabaseController.addTenant(tenant);
+        DatabaseController.addTenant(tenant);
     }
 }

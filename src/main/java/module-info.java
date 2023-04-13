@@ -3,6 +3,6 @@ module PropertyManagement {
     requires javafx.fxml;
 
 
-    opens View2 to javafx.fxml;
-    exports View2;
+    opens UIView to javafx.fxml;
+    exports UIView;
 }

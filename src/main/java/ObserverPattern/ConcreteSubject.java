@@ -1,14 +1,18 @@
 package ObserverPattern;
 
-import Controller.MockDatabaseController;
+import Controller.DatabaseController;
 import Model.*;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class ConcreteSubject {
-    public void checkLease() {
-        ArrayList<Property> properties = MockDatabaseController.getAllProperties();
+
+public class ConcreteSubject implements Runnable{
+    public static String checkPropertyAvailability() {
+        ArrayList<Property> properties = DatabaseController.getAllProperties();
         for(Property p:properties)
         {
             if(p instanceof ApartmentBuilding building)
@@ -19,7 +23,9 @@ public class ConcreteSubject {
                     Lease l=a.getLease();
                     if (l!=null) {
                         if (l.getEndDate().isBefore(LocalDateTime.now())) {
-                            a.notifyTenant();
+                            String message = a.notifyTenant();
+                            System.out.println(message);
+                            return message;
                         }
                     }
                 }
@@ -32,8 +38,10 @@ public class ConcreteSubject {
                 {
                     Lease l=c.getLease();
                     if (l!=null) {
-                        if (l.getEndDate().equals(LocalDateTime.now())) {
-                            c.notifyTenant();
+                        if (l.getEndDate().isBefore(LocalDateTime.now())) {
+                            String message = c.notifyTenant();
+                            System.out.println(message);
+                            return message;
                         }
                     }
                 }
@@ -43,12 +51,21 @@ public class ConcreteSubject {
                 House h= (House) p;
                 Lease l=h.getLease();
                 if (l!=null) {
-                    if (l.getEndDate().equals(LocalDateTime.now())) {
-                        h.notifyTenant();
+                    if (l.getEndDate().isBefore(LocalDateTime.now())) {
+                        String message = h.notifyTenant();
+                        System.out.println(message);
+                        return message;
                     }
                 }
             }
         }
+        return "";
 
         }
+
+    @Override
+    public void run() {
+        checkPropertyAvailability();
+
+    }
 }
